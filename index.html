@@ -6,22 +6,39 @@
   <script src="https://app.bodygraphchart.com/integrate-chart/js" defer></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       text-align: center;
-      margin: 20px;
     }
+
     bodygraph-embed {
-      display: inline-block;
+      display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
-  <!-- 標題已移除 -->
 
   <bodygraph-embed 
+    id="chart"
     chart-id="24704" 
     token="ca585954-e00a-4066-a0bd-7d0ff25337c0">
   </bodygraph-embed>
+
+  <script>
+    // 自動調整父 iframe 高度
+    function sendHeight() {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ type: 'setHeight', height: height }, '*');
+    }
+
+    window.addEventListener('load', () => {
+      sendHeight();
+    });
+
+    // 若 Bodygraph 有動態擴展，可每隔一段時間檢查高度
+    setInterval(sendHeight, 500);
+  </script>
 
 </body>
 </html>
